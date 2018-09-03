@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use Exception;
 
 class CreateUser extends Command
@@ -48,9 +49,14 @@ class CreateUser extends Command
 		} else {
 			$password = $this->secret('Введите пароль:');
 		}
+		$password = Hash::make($password);
 
 		try {
-			User::create(compact('name', 'email', 'password'));
+			/* @var User $user */
+			$user = User::create(compact('name', 'email', 'password'));
+			$user->generateToken();
+
+			$this->info('Ваш пользователь:' . $user->name . ', token:' . $user->api_token);
 		} catch (Exception $e) {
 			$this->error('Ошибка: ' . $e->getMessage() . PHP_EOL);
 		}

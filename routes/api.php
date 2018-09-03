@@ -14,5 +14,18 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+	return $request->user();
 });
+
+Use App\Category;
+
+Route::get('categories', 'CategoryController@index');
+Route::get('categories/{id}', 'CategoryController@show');
+Route::group(['middleware' => 'auth:api'], function () {
+	Route::post('categories', 'CategoryController@store');
+	Route::put('categories/{id}', 'CategoryController@update');
+	Route::delete('articles/{id}', 'CategoryController@delete');
+});
+
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('login', 'Auth\LoginController@login');
