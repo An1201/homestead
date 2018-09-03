@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+Use App\Category;
+Use App\Item;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 	return $request->user();
 });
 
-Use App\Category;
-
 Route::get('categories', 'CategoryController@index');
 Route::get('categories/{id}', 'CategoryController@show');
 Route::group(['middleware' => 'auth:api'], function () {
@@ -29,3 +29,11 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
+
+Route::get('items', 'ItemController@index');
+Route::get('items/{id}', 'ItemController@show');
+Route::group(['middleware' => 'auth:api'], function () {
+	Route::post('items', 'ItemController@store');
+	Route::put('items/{id}', 'ItemController@update');
+	Route::delete('items/{id}', 'ItemController@delete');
+});

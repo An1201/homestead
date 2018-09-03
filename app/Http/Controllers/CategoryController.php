@@ -9,12 +9,15 @@ class CategoryController extends Controller
 {
 	public function index()
 	{
-		return Category::all();
+		return response()->json(Category::all(), 201);
 	}
 
 	public function show($id)
 	{
-		return Category::find($id);
+		$category = Category::find($id);
+		$items = $category->items;
+
+		return response()->json($category, 201);
 	}
 
 	public function store(Request $request)

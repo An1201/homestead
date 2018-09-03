@@ -15,9 +15,8 @@ class CategoriesTableSeeder extends Seeder
 
 		DB::table('categories')->insert([
 			['name' => 'Одежда'],
-			['name' => 'Обувь'],
-			['name' => 'Сумки'],
-			['name' => 'Верхняя одежда'],
+			['name' => 'Спортивные товары'],
+			['name' => 'Категория сферических предметов'],
 		]);
 
 	}

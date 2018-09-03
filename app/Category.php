@@ -11,6 +11,13 @@ class Category extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'items'];
 
+	/**
+	 * Items belongs to category.
+	 */
+	public function items()
+	{
+		return $this->belongsToMany('App\Item');
+	}
 }
