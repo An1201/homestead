@@ -36,8 +36,10 @@ class ItemController extends Controller
 	public function store(Request $request)
 	{
 		$item = Item::create($request->all());
-		$categoryIds = $request->all()['category_id'];
-		$item->categories()->attach($categoryIds);
+		if (isset($request->all()['category_id'])) {
+			$categoryIds = $request->all()['category_id'];
+			$item->categories()->attach($categoryIds);
+		}
 
 		return response()->json($item, 201);
 	}
