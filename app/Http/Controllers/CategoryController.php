@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -27,7 +28,7 @@ class CategoryController extends Controller
 	{
 		$category = Category::with('items')->where('id', '=', $id)->get();
 		if (empty($category->toArray())) {
-			return response()->json('Not found', 204);
+			return response()->json('Not found', 404);
 		}
 		return response()->json($category, 200);
 	}
@@ -40,8 +41,16 @@ class CategoryController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$category = Category::create($request->all());
+		$validator = Validator::make($request->all(),
+			[
+				'name' => 'required|unique:categories,name',
+			]
+		);
+		if ($validator->fails()) {
+			return response()->json(['data' => $validator->errors()->all()], 400);
+		}
 
+		$category = Category::create($request->all());
 		If (isset($request->all()['item_id'])) {
 			$itemIds = $request->all()['item_id'];
 			$category->items()->attach($itemIds);

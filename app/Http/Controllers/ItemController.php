@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
+use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
 {
@@ -25,7 +26,7 @@ class ItemController extends Controller
 	{
 		$item = Item::with('categories')->where('id', '=', $id)->get();
 		if (empty($item->toArray())) {
-			return response()->json('Not found', 204);
+			return response()->json('Not found', 404);
 		}
 		return response()->json($item, 201);
 	}
@@ -37,6 +38,17 @@ class ItemController extends Controller
 	 */
 	public function store(Request $request)
 	{
+		$validator = Validator::make($request->all(),
+			[
+				'name' => 'required|unique:items,name',
+				'category_id' => 'required|array',
+				'category_id.*' => 'integer|exists:categories,id'
+			]
+		);
+		if ($validator->fails()) {
+			return response()->json(['data' => $validator->errors()->all()], 400);
+		}
+
 		$item = Item::create($request->all());
 		if (isset($request->all()['category_id'])) {
 			$categoryIds = $request->all()['category_id'];
