@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 
 class CreateUser extends Command
 {
@@ -49,11 +50,36 @@ class CreateUser extends Command
 		} else {
 			$password = $this->secret('Введите пароль:');
 		}
+
+		$validator = Validator::make(
+			[
+				'email' => $email,
+				'name' => $name,
+				'password' => $password
+			],
+			[
+				'name' => 'required',
+				'password' => 'required|min:7',
+				'email' => 'required|email|unique:users,email',
+			]);
+
+		if ($validator->fails()) {
+			$this->error('Пользователь не создан');
+			foreach ($validator->errors()->all() as $error) {
+				$this->comment($error);
+			}
+			die;
+		}
+
 		$password = Hash::make($password);
 
 		try {
 			/* @var User $user */
-			$user = User::create(compact('name', 'email', 'password'));
+			$user = User::firstOrCreate([
+				'name' => $name,
+				'email' => $email,
+				'password' => $password
+			]);
 			$user->generateToken();
 
 			$this->info('Ваш пользователь:' . $user->name . ', token:' . $user->api_token);
