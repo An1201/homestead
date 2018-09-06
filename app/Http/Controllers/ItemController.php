@@ -13,7 +13,7 @@ class ItemController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(Item::all(),201);
+		return response()->json(Item::all(),200);
 	}
 
 	/**
@@ -24,7 +24,9 @@ class ItemController extends Controller
 	public function show($id)
 	{
 		$item = Item::with('categories')->where('id', '=', $id)->get();
-
+		if (empty($item->toArray())) {
+			return response()->json('Not found', 204);
+		}
 		return response()->json($item, 201);
 	}
 
@@ -41,7 +43,7 @@ class ItemController extends Controller
 			$item->categories()->attach($categoryIds);
 		}
 
-		return response()->json($item, 201);
+		return response()->json($item, 200);
 	}
 
 	/**

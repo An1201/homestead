@@ -14,7 +14,7 @@ class CategoryController extends Controller
 	 */
 	public function index()
 	{
-		return response()->json(Category::all(), 201);
+		return response()->json(Category::all(), 200);
 	}
 
 	/**
@@ -26,8 +26,10 @@ class CategoryController extends Controller
 	public function show($id)
 	{
 		$category = Category::with('items')->where('id', '=', $id)->get();
-
-		return response()->json($category, 201);
+		if (empty($category->toArray())) {
+			return response()->json('Not found', 204);
+		}
+		return response()->json($category, 200);
 	}
 
 	/**
@@ -45,7 +47,7 @@ class CategoryController extends Controller
 			$category->items()->attach($itemIds);
 		}
 
-		return response()->json($category, 201);
+		return response()->json($category, 200);
 	}
 
 	/**
@@ -60,7 +62,7 @@ class CategoryController extends Controller
 		$category = Category::findOrFail($id);
 		$category->update($request->all());
 
-		return response()->json($category, 200);
+		return response()->json($category, 201);
 	}
 
 	/**
