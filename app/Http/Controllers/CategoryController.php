@@ -30,6 +30,7 @@ class CategoryController extends Controller
 		if (empty($category->toArray())) {
 			return response()->json('Not found', 404);
 		}
+
 		return response()->json($category, 200);
 	}
 
@@ -68,6 +69,20 @@ class CategoryController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
+		$category = Category::with('items')->where('id', '=', $id)->get();
+		if (empty($category->toArray())) {
+			return response()->json('Not found', 404);
+		}
+
+		$validator = Validator::make($request->all(),
+			[
+				'name' => 'required|unique:categories,name',
+			]
+		);
+		if ($validator->fails()) {
+			return response()->json(['data' => $validator->errors()->all()], 400);
+		}
+
 		$category = Category::findOrFail($id);
 		$category->update($request->all());
 

@@ -66,6 +66,23 @@ class ItemController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
+		$item = Item::with('categories')->where('id', '=', $id)->get();
+		if (empty($item->toArray())) {
+			return response()->json('Not found', 404);
+		}
+
+		$validator = Validator::make($request->all(),
+			[
+				'name' => 'required|unique:items,name',
+				'category_id' => 'required|array',
+				'category_id.*' => 'integer|exists:categories,id'
+			]
+		);
+
+		if ($validator->fails()) {
+			return response()->json(['data' => $validator->errors()->all()], 400);
+		}
+
 		$item = Item::findOrFail($id);
 		$item->update($request->all());
 
