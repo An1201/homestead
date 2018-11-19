@@ -18,3 +18,29 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/**
+ * Вывод списка задач
+ */
+Route::get('/tasks', 'TaskController@getList');
+/**
+ * Создание задачи
+ */
+Route::post('/task', 'TaskController@create');
+/**
+ * Удалить задачу
+ */
+Route::delete('/task/{task}', 'TaskController@delete');
+
+/**
+ * Вывод списка тем
+ */
+Route::get('/themes', 'ThemeController@getList');
+/**
+ * Создание темы
+ */
+Route::post('/theme', 'ThemeController@create');
+/**
+ * Удалить тему
+ */
+Route::delete('/theme/{theme}', 'ThemeController@delete');
