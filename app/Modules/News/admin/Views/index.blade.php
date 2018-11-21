@@ -2,17 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: anastasia
- * Date: 19/11/2018
- * Time: 18:33
+ * Date: 20/11/2018
+ * Time: 13:03
  */
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Редактирование тем</title>
+    <title>Админка</title>
+
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -38,8 +40,8 @@
         <div class="container">
             <div class="navbar-header">
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/themes') }}">
-                    Список тем
+                <a class="navbar-brand" href="{{ $homeUrl }}">
+                    {{ $navbarTitle }}
                 </a>
             </div>
         </div>

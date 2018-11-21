@@ -2,49 +2,59 @@
 /**
  * Created by PhpStorm.
  * User: anastasia
- * Date: 19/11/2018
- * Time: 18:36
+ * Date: 20/11/2018
+ * Time: 13:40
  */
+
 ?>
 
-@extends('themes.index')
+@extends('News::index')
 
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Новая тема
+                    New article
                 </div>
 
                 <div class="panel-body">
                     <!-- Отображение ошибок проверки ввода -->
-                @include('common.errors')
+                <!-- /*@*include('common.errors') -->
 
-                <!-- Форма новой темы -->
-                    <form action="{{ url('theme') }}" method="POST" class="form-horizontal">
-                    {{ csrf_field() }}
+                <!-- Форма новой статьи -->
+                    <form action="{{ url('admin/article') }}" method="POST" class="form-horizontal">
 
-                    <!-- Имя темы -->
+                    <!-- Имя статьи -->
                         <div class="form-group">
-                            <label for="theme" class="col-sm-3 control-label">Название</label>
+                            <label for="article-title" class="col-sm-3 control-label">Название</label>
                             <div class="col-sm-6">
-                                <input type="text" name="name" id="theme-name" class="form-control" value="{{ old('theme') }}">
+                                <input type="text" name="title" id="article-title" class="form-control" value="">
                             </div>
                         </div>
-                        <!-- Приоритет -->
                         <div class="form-group">
-                            <label for="priority" class="col-sm-3 control-label">Приоритет</label>
+                            <label for="article-text" class="col-sm-3 control-label">Текст</label>
                             <div class="col-sm-6">
-                                <input type="text" name="priority" id="priority" class="form-control" value="">
+                                <textarea name="text" id="article-text" class="form-control" rows="3">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="article-theme" class="col-sm-3 control-label">В тему</label>
+                            <div class="col-sm-6">
+                                <select name="theme_id" id="article-theme" class="custom-select form-control">
+                                    @foreach ($themes as $theme)
+                                        <option value="{{$theme->id}}">{{$theme->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
-                        <!-- Кнопка добавления темы -->
+                        <!-- Кнопка добавления статьи -->
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-plus"></i> Добавить тему
+                                    <i class="fa fa-plus"></i> Сохранить статью
                                 </button>
                             </div>
                         </div>
@@ -52,38 +62,38 @@
                 </div>
             </div>
 
-            <!-- Текущие темы -->
-            @if (count($themes) > 0)
+            <!-- Текущие статьи -->
+            @if (count($articles) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Все темы
+                        Текущая статья
                     </div>
 
                     <div class="panel-body">
-                        <table class="table table-striped themes-table">
+                        <table class="table table-striped article-table">
 
                             <!-- Заголовок таблицы -->
                             <thead>
+                            <th>Статья</th>
                             <th>Тема</th>
-                            <th>Приоритет</th>
+                            <th> </th>
                             </thead>
 
                             <!-- Тело таблицы -->
                             <tbody>
-                            @foreach ($themes as $theme)
+                            @foreach ($articles as $article)
                                 <tr>
-                                    <!-- Имя темы -->
+                                    <!-- Имя статьи -->
                                     <td class="table-text">
-                                        <div>{{ $theme->name }}</div>
+                                        <div>{{ $article->title }}</div>
                                     </td>
-                                    <!-- Приоритет темы -->
-                                    <td class="table-text">
-                                        <div>{{ $theme->priority }}</div>
+                                    <td >
+                                        <div>{{ $article->theme_id }}</div>
                                     </td>
+
                                     <!-- Кнопка Удалить -->
                                     <td>
-                                        <form action="{{ url('theme/'.$theme->id) }}" method="POST">
-                                            {{ csrf_field() }}
+                                        <form action="{{ url('admin/article/' . $article->id) }}" method="POST">
                                             {{ method_field('DELETE') }}
 
                                             <button type="submit" class="btn btn-danger">
