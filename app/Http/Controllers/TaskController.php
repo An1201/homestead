@@ -15,7 +15,9 @@ class TaskController extends Controller
         $tasks = Task::orderBy('created_at', 'asc')->get();
 
         return view('tasks.tasks', [
-          'tasks' => $tasks
+            'tasks' => $tasks,
+            'navbarTitle' => 'Задачи',
+            'homeUrl'=> '/tasks'
         ]);
     }
 
@@ -25,13 +27,13 @@ class TaskController extends Controller
      */
     public function create(Request $request) {
         $validator = Validator::make($request->all(), [
-          'name' => 'required|max:255',
+            'name' => 'required|max:255',
         ]);
 
         if ($validator->fails()) {
-          return redirect('/tasks')
-            ->withInput()
-            ->withErrors($validator);
+            return redirect('/tasks')
+              ->withInput()
+              ->withErrors($validator);
         }
 
         $task = new Task;

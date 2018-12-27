@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Modules\News\admin\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Modules\News\Model\Theme;
+use App\Theme;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
 
 class ThemeController extends Controller
 {
@@ -13,12 +12,13 @@ class ThemeController extends Controller
    * Выводит список тем
    */
   public function getList() {
+
     $themes = Theme::orderBy('priority', 'desc')->get();
 
-    return view('News::themes.themes', [
+    return view('themes.themes', [
       'themes' => $themes,
-      'navbarTitle' => 'Список тем',
-      'homeUrl' => url('/admin/themes'),
+      'navbarTitle' => 'Темы',
+      'homeUrl' => url('/themes'),
     ]);
   }
 
@@ -43,7 +43,7 @@ class ThemeController extends Controller
     $theme->priority = $request->priority;
     $theme->save();
 
-    return redirect('/admin/themes');
+    return redirect('/themes');
   }
 
   /**
@@ -51,16 +51,16 @@ class ThemeController extends Controller
    */
   public function delete($themeId) {
     if (!$themeId) {
-        return redirect('/admin/themes')
+        return redirect('/themes')
         ->withErrors('не передан id');
     }
     $theme = Theme::find($themeId);
     if (!$theme) {
-        return redirect('/admin/themes')
+        return redirect('/themes')
         ->withErrors('тема не найдена');
     }
 
     $theme->delete();
-    return redirect('/admin/themes');
+    return redirect('/themes');
   }
 }

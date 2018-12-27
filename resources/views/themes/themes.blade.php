@@ -2,59 +2,49 @@
 /**
  * Created by PhpStorm.
  * User: anastasia
- * Date: 20/11/2018
- * Time: 13:40
+ * Date: 19/11/2018
+ * Time: 18:36
  */
-
 ?>
 
-@extends('News::index')
+@extends('index')
 
 @section('content')
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    New article
+                    Новая тема
                 </div>
 
                 <div class="panel-body">
                     <!-- Отображение ошибок проверки ввода -->
-                <!-- /*@*include('common.errors') -->
+                    @include('common.errors')
 
-                <!-- Форма новой статьи -->
-                    <form action="{{ url('admin/article') }}" method="POST" class="form-horizontal">
+                <!-- Форма новой темы -->
+                    <form action="{{ url('/theme') }}" method="POST" class="form-horizontal">
+                    {{ csrf_field() }}
 
-                    <!-- Имя статьи -->
+                    <!-- Имя темы -->
                         <div class="form-group">
-                            <label for="article-title" class="col-sm-3 control-label">Название</label>
+                            <label for="theme" class="col-sm-3 control-label">Название</label>
                             <div class="col-sm-6">
-                                <input type="text" name="title" id="article-title" class="form-control" value="">
+                                <input type="text" name="name" id="theme-name" class="form-control" value="">
                             </div>
                         </div>
+                        <!-- Приоритет -->
                         <div class="form-group">
-                            <label for="article-text" class="col-sm-3 control-label">Текст</label>
+                            <label for="priority" class="col-sm-3 control-label">Приоритет</label>
                             <div class="col-sm-6">
-                                <textarea name="text" id="article-text" class="form-control" rows="3">
-                                </textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="article-theme" class="col-sm-3 control-label">В тему</label>
-                            <div class="col-sm-6">
-                                <select name="theme_id" id="article-theme" class="custom-select form-control">
-                                    @foreach ($themes as $theme)
-                                        <option value="{{$theme->id}}">{{$theme->name}}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" name="priority" id="priority" class="form-control" value="">
                             </div>
                         </div>
 
-                        <!-- Кнопка добавления статьи -->
+                        <!-- Кнопка добавления темы -->
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="submit" class="btn btn-default">
-                                    <i class="fa fa-plus"></i> Сохранить статью
+                                    <i class="fa fa-plus"></i> Создать
                                 </button>
                             </div>
                         </div>
@@ -62,40 +52,38 @@
                 </div>
             </div>
 
-            <!-- Текущие статьи -->
-            @if (count($articles) > 0)
+            <!-- Текущие темы -->
+            @if (count($themes) > 0)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Текущая статья
+                        Все темы
                     </div>
 
                     <div class="panel-body">
-                        <table class="table table-striped article-table">
+                        <table class="table table-striped themes-table">
 
                             <!-- Заголовок таблицы -->
                             <thead>
-                            <th>Статья</th>
-                            <th>Тема</th>
-                            <th> </th>
+                            <th>Название</th>
+                            <th>Приоритет</th>
                             </thead>
 
                             <!-- Тело таблицы -->
                             <tbody>
-                            @foreach ($articles as $article)
+                            @foreach ($themes as $theme)
                                 <tr>
-                                    <!-- Имя статьи -->
+                                    <!-- Имя темы -->
                                     <td class="table-text">
-                                        <div>{{ $article->title }}</div>
+                                        <div>{{ $theme->name }}</div>
                                     </td>
-                                    <td >
-                                        <div>{{ $article->theme_id }}</div>
+                                    <!-- Приоритет темы -->
+                                    <td class="table-text">
+                                        <div>{{ $theme->priority }}</div>
                                     </td>
-
                                     <!-- Кнопка Удалить -->
                                     <td>
-                                        <form action="{{ url('admin/article/' . $article->id) }}" method="POST">
+                                        <form action="{{ url('/theme/' . $theme->id) }}" method="POST">
                                             {{ method_field('DELETE') }}
-
                                             <button type="submit" class="btn btn-danger">
                                                 <i class="fa fa-trash"></i> Удалить
                                             </button>

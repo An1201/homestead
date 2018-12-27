@@ -2,7 +2,6 @@
 /public/storage
 /vendor
 /.idea
-/.idea/*
 .phpstorm.meta.php
 Homestead.yaml
 Homestead.json

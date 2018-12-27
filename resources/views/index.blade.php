@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: anastasia
- * Date: 19/11/2018
- * Time: 16:52
+ * Date: 20/11/2018
+ * Time: 13:03
  */
 ?>
 
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Quickstart - Basic</title>
+    <title>Админка</title>
 
 
     <!-- Fonts -->
@@ -22,16 +22,16 @@
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-{{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
-<style>
-    body {
-        font-family: 'Lato';
-    }
-    .fa-btn {
-        margin-right: 6px;
-    }
-</style>
+    <style>
+        body {
+            font-family: 'Lato';
+        }
+        .fa-btn {
+            margin-right: 6px;
+        }
+    </style>
 </head>
 
 <body id="app-layout">
@@ -40,8 +40,8 @@
         <div class="container">
             <div class="navbar-header">
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/tasks') }}">
-                    Task List
+                <a class="navbar-brand" href="{{ $homeUrl }}">
+                    {{ $navbarTitle }}
                 </a>
             </div>
         </div>
