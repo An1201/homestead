@@ -39,10 +39,9 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ $homeUrl }}">
-                    {{ $navbarTitle }}
-                </a>
+                <a class="navbar-brand" href="/tasks">Задачи</a>
+                <a class="navbar-brand" href="/themes">Темы</a>
+                <a class="navbar-brand" href="/news">Новости</a>
             </div>
         </div>
     </nav>

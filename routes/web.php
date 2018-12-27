@@ -19,7 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 /**
  * Вывод списка задач
  */
@@ -32,7 +31,6 @@ Route::post('/task', 'TaskController@create');
  * Удалить задачу
  */
 Route::delete('/task/{task}', 'TaskController@delete');
-
 
 /**
  * Вывод списка тем
@@ -59,4 +57,3 @@ Route::post('/article', 'ArticleController@create');
  * Удалить статью
  */
 Route::delete('/article/{articleId}', 'ArticleController@delete');
-

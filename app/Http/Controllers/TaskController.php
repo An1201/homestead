@@ -16,8 +16,8 @@ class TaskController extends Controller
 
         return view('tasks.tasks', [
             'tasks' => $tasks,
-            'navbarTitle' => 'Задачи',
-            'homeUrl'=> '/tasks'
+            'navbarTitle' => 'В админку',
+            'homeUrl' => url('/admin-home'),
         ]);
     }
 

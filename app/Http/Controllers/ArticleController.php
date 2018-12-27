@@ -17,8 +17,8 @@ class ArticleController extends Controller
 
     return view('articles.articles', [
       'articles' => $articles,
-      'navbarTitle' => 'Статьи',
-      'homeUrl' => url('/articles'),
+      'navbarTitle' => 'В админку',
+      'homeUrl' => url('/admin-home'),
       'themes' => Theme::all(),
     ]);
   }

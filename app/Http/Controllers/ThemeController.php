@@ -17,8 +17,8 @@ class ThemeController extends Controller
 
     return view('themes.themes', [
       'themes' => $themes,
-      'navbarTitle' => 'Темы',
-      'homeUrl' => url('/themes'),
+      'navbarTitle' => 'В админку',
+      'homeUrl' => url('/admin-home'),
     ]);
   }
 
