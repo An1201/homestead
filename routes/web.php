@@ -56,4 +56,4 @@ Route::post('/article', 'ArticleController@create');
 /**
  * Удалить статью
  */
-Route::delete('/article/{articleId}', 'ArticleController@delete');
+Route::delete('/article/{article}', 'ArticleController@delete');

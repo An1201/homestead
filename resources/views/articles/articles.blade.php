@@ -23,8 +23,8 @@
                 @include('common.errors')
 
                 <!-- Форма новой статьи -->
-                    <form action="{{ url('admin/article') }}" method="POST" class="form-horizontal">
-
+                    <form action="{{ url('/article') }}" method="POST" class="form-horizontal">
+                    {{ csrf_field() }}
                     <!-- Имя статьи -->
                         <div class="form-group">
                             <label for="article-title" class="col-sm-3 control-label">Название</label>
@@ -93,7 +93,8 @@
 
                                     <!-- Кнопка Удалить -->
                                     <td>
-                                        <form action="{{ url('admin/article/' . $article->id) }}" method="POST">
+                                        <form action="{{ url('/article/' . $article->id) }}" method="POST">
+                                            {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
 
                                             <button type="submit" class="btn btn-danger">

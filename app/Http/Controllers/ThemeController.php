@@ -49,18 +49,9 @@ class ThemeController extends Controller
   /**
    * Удаляет тему
    */
-  public function delete($themeId) {
-    if (!$themeId) {
-        return redirect('/themes')
-        ->withErrors('не передан id');
-    }
-    $theme = Theme::find($themeId);
-    if (!$theme) {
-        return redirect('/themes')
-        ->withErrors('тема не найдена');
-    }
-
+  public function delete(Theme $theme) {
     $theme->delete();
+
     return redirect('/themes');
   }
 }

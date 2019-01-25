@@ -16,8 +16,6 @@ class TaskController extends Controller
 
         return view('tasks.tasks', [
             'tasks' => $tasks,
-            'navbarTitle' => 'В админку',
-            'homeUrl' => url('/admin-home'),
         ]);
     }
 
@@ -47,6 +45,7 @@ class TaskController extends Controller
      * Удаляет задачу
      */
     public function delete(Task $task) {
+
         $task->delete();
 
         return redirect('/tasks');

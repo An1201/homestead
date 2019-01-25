@@ -17,8 +17,6 @@ class ArticleController extends Controller
 
     return view('articles.articles', [
       'articles' => $articles,
-      'navbarTitle' => 'В админку',
-      'homeUrl' => url('/admin-home'),
       'themes' => Theme::all(),
     ]);
   }
@@ -45,25 +43,14 @@ class ArticleController extends Controller
     $article->theme_id = $request->theme_id;
     $article->save();
 
-    return redirect('/admin/news');
+    return redirect('/news');
   }
 
   /**
    * Удаляет статью
    */
-  public function delete($articleId) {
-      if (!$articleId) {
-          return redirect('/admin/news')
-          ->withErrors('не передан id');
-      }
-
-      $article = Article::find($articleId);
-      if (!$article) {
-          return redirect('/admin/news')
-          ->withErrors('статья не найдена');
-      }
-
+  public function delete(Article $article) {
     $article->delete();
-    return redirect('/admin/news');
+    return redirect('/news');
   }
 }
